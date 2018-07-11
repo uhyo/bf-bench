@@ -27,8 +27,6 @@ exports.main = function(sourceFile) {
     // initialize pc and pointer.
     let pc = 0;
     let mem = 0;
-    // stack to remember position of [.
-    const loopStack = [];
 
     // main loop.
     while (pc < codeLength) {
