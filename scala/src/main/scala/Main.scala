@@ -2,15 +2,20 @@ import java.nio.file.{Files, Paths}
 import scala.collection.mutable.ArrayBuffer
 
 object Main extends App {
-  val filename =
-    args.headOption match {
-      case None => throw new RuntimeException("Filename is invalid")
-      case Some(filename) => filename
-    }
+  val filename = args(0)
+  val repeat = args(1).toInt
   val code = loadFile(filename)
 
-  val output = run(code)
-  System.out.write(output.toArray)
+  // Repeat running the code.
+  for (_ <- 1 to repeat) {
+    // val output = run(code)
+    // System.out.write(output.toArray)
+
+    val startTime = System.nanoTime()
+    run(code)
+    val endTime = System.nanoTime()
+    println(endTime - startTime)
+  }
 
   /**
    * Load entire buffer from given file.

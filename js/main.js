@@ -1,6 +1,5 @@
 'use strict';
 
-const fs = require('fs');
 const {
     OutputBuffer,
 } = require('./buf.js');
@@ -13,9 +12,7 @@ const {
  */
 const MEMORY_LENGTH = 30000;
 
-exports.main = function(sourceFile) {
-    // load source code as a Buffer.
-    const code = fs.readFileSync(sourceFile);
+exports.main = function(code) {
     const codeLength = code.length;
 
     // Cache of loops.
@@ -93,6 +90,6 @@ exports.main = function(sourceFile) {
         pc++;
     }
     // Finally, output the result.
-    process.stdout.write(output.getBuf());
+    return output.getBuf();
 };
 

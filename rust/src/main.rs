@@ -1,19 +1,31 @@
 extern crate rustbf;
 
 use std::{env, io, fs::File};
-use std::io::{Read, Write};
+use std::io::{Read};
+use std::time::{Instant};
 use rustbf::{LoopMap};
 
 const MEMORY_LENGTH: usize = 30000;
 
 fn main() {
     // file name of bf source.
-    let source_file = env::args().nth(1).expect("Filename is invalid"); 
+    let args = env::args().collect::<Vec<_>>();
+    let source_file = args.get(1).expect("Filename is invalid"); 
+    // number of repeat.
+    let repeat = args.get(2).expect("Repeat number is undefined");
+    let repeat = usize::from_str_radix(repeat, 10).unwrap();
     // load source code.
-    let code = read_source(&source_file).unwrap();
+    let code = read_source(source_file).unwrap();
     // run code.
-    let out = run(&code);
-    io::stdout().write_all(&out).unwrap();
+    // let out = run(&code);
+    // io::stdout().write_all(&out).unwrap();
+    for _ in 0 .. repeat {
+        let start_time = Instant::now();
+        run(&code);
+        let elapsed = start_time.elapsed();
+        let nanos = elapsed.as_secs() * 1_000_000_000 + u64::from(elapsed.subsec_nanos());
+        println!("{}", nanos);
+    }
 }
 
 /// Read source file.

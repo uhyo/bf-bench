@@ -1,16 +1,16 @@
-use std::collections::BTreeMap;
+use std::collections::HashMap;
 
 /// Loop correspondence finder.
 pub struct LoopMap<'a> {
     code: &'a [u8],
-    cache: BTreeMap<usize, usize>,
+    cache: HashMap<usize, usize>,
 }
 impl<'a> LoopMap<'a> {
     /// Initialize a new LoopMap.
     pub fn new(code: &'a [u8]) -> Self {
         LoopMap {
             code,
-            cache: BTreeMap::new(),
+            cache: HashMap::new(),
         }
     }
     /// Find the corresponding end of loop.
